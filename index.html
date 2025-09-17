@@ -1,0 +1,2824 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J&K Career & Education Advisor | Government of Jammu & Kashmir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Government Color Scheme */
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #0066cc;
+            --accent-orange: #ff6600;
+            --success-green: #006633;
+            --warning-yellow: #ffaa00;
+            --error-red: #cc0000;
+            --neutral-gray: #666666;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --text-dark: #333333;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+        }
+
+        /* Government Header Style */
+        .gov-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            border-bottom: 4px solid var(--accent-orange);
+            box-shadow: 0 4px 20px rgba(0, 51, 102, 0.15);
+        }
+
+        .gov-emblem {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Official Card Style */
+        .official-card {
+            background: var(--white);
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-blue);
+            box-shadow: 0 8px 32px rgba(0, 51, 102, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .official-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0, 51, 102, 0.15);
+            border-left-color: var(--accent-orange);
+        }
+
+        .official-card img {
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Government Button Style */
+        .gov-btn-primary {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
+        }
+
+        .gov-btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(0, 102, 204, 0.4);
+        }
+
+        .gov-btn-secondary {
+            background: var(--white);
+            color: var(--secondary-blue);
+            border: 2px solid var(--secondary-blue);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .gov-btn-secondary:hover {
+            background: var(--secondary-blue);
+            color: var(--white);
+        }
+
+        /* Tab Button Government Style */
+        .gov-tab-button {
+            background: var(--light-gray);
+            color: var(--neutral-gray);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .gov-tab-button.active {
+            background: var(--white);
+            color: var(--secondary-blue);
+            border-bottom-color: var(--accent-orange);
+            box-shadow: 0 -2px 8px rgba(0, 102, 204, 0.1);
+        }
+
+        /* Chart Container Government Style */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 16px rgba(0, 51, 102, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Modal Government Style */
+        .gov-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 51, 102, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .gov-modal.hidden {
+            display: none;
+        }
+
+        .gov-modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            border-top: 4px solid var(--accent-orange);
+            box-shadow: 0 20px 60px rgba(0, 51, 102, 0.3);
+        }
+
+        /* Government Navigation */
+        .gov-nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .gov-nav-link:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Success/Status Colors */
+        .status-success {
+            background: var(--success-green);
+            color: var(--white);
+        }
+
+        .status-warning {
+            background: var(--warning-yellow);
+            color: var(--text-dark);
+        }
+
+        .status-error {
+            background: var(--error-red);
+            color: var(--white);
+        }
+
+        /* Course Card Images */
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .college-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Government Form Styling */
+        .gov-form-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .gov-form-input:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        /* Timeline Tracker Styles */
+        .timeline-tracker {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-item {
+            background: var(--white);
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-blue);
+            box-shadow: 0 4px 16px rgba(0, 51, 102, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 51, 102, 0.12);
+            border-left-color: var(--accent-orange);
+        }
+
+        .timeline-item.urgent {
+            border-left-color: var(--error-red);
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        }
+
+        .timeline-item.upcoming {
+            border-left-color: var(--warning-yellow);
+            background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);
+        }
+
+        .timeline-item.active {
+            border-left-color: var(--success-green);
+            background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+        }
+
+        .timeline-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-content.fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .timeline-content.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-indicator {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+            gap: 8px;
+        }
+
+        .timeline-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-dot.active {
+            background: var(--secondary-blue);
+            transform: scale(1.2);
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-blue) 0%, var(--accent-orange) 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Chatbot Button Styles */
+        .chatbot-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 51, 102, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 3px solid var(--white);
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 12px 48px rgba(0, 51, 102, 0.4);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-orange) 100%);
+        }
+
+        .chatbot-button span {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .chatbot-tooltip {
+            position: absolute;
+            right: 76px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--text-dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 6px solid transparent;
+            border-left-color: var(--text-dark);
+        }
+
+        .chatbot-button:hover .chatbot-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* App Download Button Styles */
+        .app-download-button {
+            background: linear-gradient(135deg, var(--success-green) 0%, #4ade80 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 102, 51, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 102, 51, 0.4);
+            background: linear-gradient(135deg, #4ade80 0%, var(--success-green) 100%);
+        }
+
+        .app-download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .app-download-button:hover::before {
+            left: 100%;
+        }
+
+        .app-download-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 16px rgba(0, 102, 51, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 16px rgba(0, 102, 51, 0.6);
+            }
+            100% {
+                box-shadow: 0 4px 16px rgba(0, 102, 51, 0.3);
+            }
+        }
+
+        /* Student Match Styles */
+        .student-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: 3px solid var(--white);
+            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.2);
+        }
+
+        .student-card {
+            background: var(--white);
+            border-radius: 12px;
+            border-left: 4px solid var(--success-green);
+            box-shadow: 0 4px 16px rgba(0, 51, 102, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 51, 102, 0.12);
+            border-left-color: var(--accent-orange);
+        }
+
+        .match-percentage {
+            background: linear-gradient(135deg, var(--success-green) 0%, #4ade80 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .online-indicator {
+            width: 12px;
+            height: 12px;
+            background: var(--success-green);
+            border-radius: 50%;
+            border: 2px solid var(--white);
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 102, 51, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(0, 102, 51, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 102, 51, 0);
+            }
+        }
+
+        /* Accessibility Features */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            .official-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .gov-btn-primary {
+                border: 2px solid var(--primary-blue);
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .chatbot-button {
+                bottom: 16px;
+                right: 16px;
+                width: 56px;
+                height: 56px;
+            }
+            
+            .chatbot-button span {
+                font-size: 20px;
+            }
+            
+            .chatbot-tooltip {
+                display: none;
+            }
+            
+            .app-download-button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+        
+        /* New styles from app.js */
+        /* Mentorship page specific styles */
+        .mentor-card {
+          background: var(--white);
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 4px 16px rgba(0, 51, 102, 0.08);
+          transition: all 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        
+        .mentor-card:hover {
+          box-shadow: 0 8px 24px rgba(0, 51, 102, 0.12);
+          transform: translateY(-2px);
+        }
+        
+        .mentor-avatar {
+          text-align: center;
+          margin-bottom: 16px;
+        }
+        
+        .mentor-avatar .emoji {
+          font-size: 3rem;
+          display: block;
+          margin-bottom: 8px;
+        }
+        
+        .mentor-info {
+          flex-grow: 1;
+        }
+        
+        .mentor-info h4 {
+          font-size: 18px;
+          font-weight: 600;
+          color: #333333;
+          margin-bottom: 4px;
+        }
+        
+        .mentor-info .course-info {
+          color: var(--secondary-blue);
+          font-weight: 500;
+          font-size: 14px;
+          margin-bottom: 2px;
+        }
+        
+        .mentor-info .college-info {
+          color: #666666;
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+        
+        .mentor-info .bio {
+          color: #666666;
+          font-size: 14px;
+          line-height: 1.4;
+          margin-bottom: 12px;
+        }
+        
+        .mentor-info .specialization {
+          background: #e2e8f0;
+          color: #333333;
+          padding: 4px 8px;
+          border-radius: 9999px;
+          font-size: 11px;
+          font-weight: 500;
+          display: inline-block;
+          margin-bottom: 12px;
+        }
+        
+        .mentor-actions {
+          display: flex;
+          gap: 8px;
+          margin-top: auto;
+        }
+        
+        .mentor-actions .gov-btn-primary {
+          flex: 1;
+          font-size: 14px;
+          padding: 6px 12px;
+        }
+        
+        /* Faculty specific styles */
+        .faculty-card .mentor-info .department {
+          color: var(--secondary-blue);
+          font-weight: 500;
+          font-size: 14px;
+          margin-bottom: 2px;
+        }
+        
+        .faculty-card .mentor-info .experience {
+          color: #666666;
+          font-size: 11px;
+          margin-bottom: 4px;
+        }
+        
+        .faculty-card .mentor-info .office-hours {
+          background: #fffbf0;
+          color: #333333;
+          padding: 4px 8px;
+          border-radius: 6px;
+          font-size: 11px;
+          margin-bottom: 8px;
+        }
+        
+        /* Counsellor specific styles */
+        .counsellor-card {
+          background: linear-gradient(135deg, #ffffff 0%, #fef7ff 100%);
+          border: 2px solid #e879f9;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 10px 25px rgba(232, 121, 249, 0.1);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .counsellor-card:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #e879f9, #c084fc, #a855f7);
+        }
+        
+        .counsellor-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 20px 40px rgba(232, 121, 249, 0.15);
+        }
+        
+        .counsellor-card .mentor-info .specialization {
+          background: linear-gradient(135deg, #fdf4ff, #fae8ff);
+          color: #7c3aed;
+          border: 1px solid #e879f9;
+        }
+        
+        .counsellor-card .mentor-info .qualifications {
+          color: #666666;
+          font-size: 11px;
+          margin-bottom: 8px;
+          font-style: italic;
+        }
+        
+        .counsellor-card .services {
+          margin-bottom: 12px;
+        }
+        
+        .counsellor-card .services-title {
+          font-size: 14px;
+          font-weight: 500;
+          color: #333333;
+          margin-bottom: 6px;
+        }
+        
+        .counsellor-card .services-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+        }
+        
+        .counsellor-card .service-tag {
+          background: #fdf4ff;
+          color: #7c3aed;
+          padding: 2px 6px;
+          border-radius: 9999px;
+          font-size: 11px;
+          border: 1px solid #e879f9;
+        }
+        
+        .counsellor-card .contact-info {
+          background: #f8fafc;
+          padding: 8px;
+          border-radius: 6px;
+          margin-bottom: 12px;
+          border-left: 4px solid #e879f9;
+        }
+        
+        .counsellor-card .contact-info .contact-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 4px;
+          font-size: 11px;
+        }
+        
+        .counsellor-card .contact-info .contact-item:last-child {
+          margin-bottom: 0;
+        }
+        
+        .counsellor-card .emergency-info {
+          background: linear-gradient(135deg, #fef2f2, #fee2e2);
+          color: #dc2626;
+          padding: 6px 8px;
+          border-radius: 6px;
+          font-size: 11px;
+          font-weight: 500;
+          text-align: center;
+          margin-bottom: 12px;
+          border: 1px solid #fecaca;
+        }
+        
+        /* Modal styles */
+        .modal {
+          backdrop-filter: blur(4px);
+        }
+        
+        .modal.hidden {
+          display: none !important;
+        }
+        
+        .modal .bg-white {
+          max-height: 90vh;
+          overflow-y: auto;
+        }
+        
+        #modal-content .contact-details {
+          background: #e2e8f0;
+          padding: 12px;
+          border-radius: 6px;
+          margin-bottom: 12px;
+        }
+        
+        #modal-content .contact-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 8px;
+          padding: 6px;
+          background: #ffffff;
+          border-radius: 6px;
+          border: 1px solid #e2e8f0;
+        }
+        
+        #modal-content .contact-item:last-child {
+          margin-bottom: 0;
+        }
+        
+        #modal-content .contact-label {
+          font-weight: 500;
+          color: #333333;
+          min-width: 80px;
+        }
+        
+        #modal-content .contact-value {
+          color: var(--secondary-blue);
+          font-family: monospace;
+          font-size: 14px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .mentor-actions {
+            flex-direction: column;
+          }
+          
+          .mentor-actions .gov-btn-primary {
+            flex: none;
+          }
+          
+          .counsellor-card .services-list {
+            flex-direction: column;
+          }
+          
+          .counsellor-card .service-tag {
+            text-align: center;
+          }
+        }
+        
+        /* Animation for page transitions */
+        .page-transition {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        /* Loading state */
+        .loading {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 32px;
+        }
+        
+        .loading::after {
+          content: '';
+          width: 32px;
+          height: 32px;
+          border: 3px solid #e2e8f0;
+          border-top: 3px solid var(--secondary-blue);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* Accessibility improvements */
+        .gov-btn-primary:focus-visible,
+        .official-card:focus-visible,
+        .mentor-card:focus-visible {
+          outline: 2px solid var(--secondary-blue);
+          outline-offset: 2px;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+          .official-card,
+          .mentor-card,
+          .counsellor-card {
+            border-width: 2px;
+          }
+          
+          .counsellor-card {
+            border-color: #7c3aed;
+          }
+        }
+        
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="gov-header sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <div class="flex items-center space-x-4">
+                <div class="gov-emblem">J&K</div>
+                <div>
+                    <div class="text-xl font-bold text-white">Career & Education Advisor</div>
+                    <div class="text-sm text-blue-200">Government of Jammu & Kashmir</div>
+                </div>
+            </div>
+            <div id="nav-links" class="hidden md:flex space-x-2">
+                <a href="#home" class="gov-nav-link">Home</a>
+                <a href="#assessment-page" class="gov-nav-link">Assessment</a>
+                <a href="#profile" class="gov-nav-link">Profile</a>
+                <a href="#colleges" class="gov-nav-link">Colleges</a>
+            </div>
+            <div class="md:hidden">
+                <button class="gov-nav-link" id="mobile-menu-toggle">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+        <section id="auth-section" class="py-16">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Your Future</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">An official digital platform by the Government of Jammu & Kashmir to guide students in their educational and career journey. Login to your account or create a new one to begin your personalized career guidance.</p>
+                <div class="flex justify-center items-center space-x-2 text-sm text-gray-500">
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span>Secure Government Platform</span>
+                </div>
+            </div>
+            
+            <div class="official-card max-w-md mx-auto p-8">
+                <h2 id="auth-title" class="text-2xl font-semibold mb-6 text-center text-gray-800">Login</h2>
+                <form id="auth-form" class="space-y-6">
+                    <div>
+                        <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+                        <input type="text" id="username" name="username" class="gov-form-input w-full" required>
+                    </div>
+                    <div>
+                        <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                        <input type="password" id="password" name="password" class="gov-form-input w-full" required>
+                    </div>
+                    <div id="register-fields" class="space-y-6 hidden">
+                         <div>
+                            <label for="location" class="block text-gray-700 font-medium mb-2">Location (e.g., Jammu, Srinagar)</label>
+                            <input type="text" id="location" class="gov-form-input w-full" placeholder="Enter your city">
+                        </div>
+                        <div>
+                            <label for="academic-interests" class="block text-gray-700 font-medium mb-2">Academic Interests</label>
+                            <select id="academic-interests" class="gov-form-input w-full">
+                                <option value="">Select your interest</option>
+                                <option value="Science">Science</option>
+                                <option value="Arts">Arts</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="IT">IT & Computer Science</option>
+                                <option value="Medicine">Medicine & Health</option>
+                                <option value="Law">Law</option>
+                                <option value="Civil Services">Civil Services</option>
+                                <option value="Business">Business & Management</option>
+                                <option value="History">History & Social Studies</option>
+                                <option value="Literature">Literature & Languages</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" id="auth-button" class="gov-btn-primary w-full">Login</button>
+                    <p id="error-message" class="text-center text-red-600 hidden font-medium"></p>
+                </form>
+                <div class="mt-6 text-center">
+                    <button id="toggle-auth-mode" class="text-blue-600 font-medium hover:text-blue-800 transition">Create a new account</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="main-content" class="hidden">
+            <section id="home" class="py-16">
+                <!-- App Download Button - Top Left -->
+                <div class="mb-8">
+                    <button id="app-download-btn" class="app-download-button app-download-pulse">
+                        <span class="text-xl">📱</span>
+                        <div class="flex flex-col text-left">
+                            <span class="text-xs leading-tight opacity-90">Download Mobile App</span>
+                            <span class="text-sm font-bold leading-tight">J&K Career Advisor</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Your Personalized Dashboard</h1>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Welcome back! Here's a quick overview of your recommendations based on your profile and assessment results from the J&K Government Career Guidance System.</p>
+                </div>
+                
+                <div class="official-card max-w-5xl mx-auto p-8 mb-12">
+                    <h2 class="text-2xl font-bold text-center text-blue-800 mb-8">Recommended for You</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="p-6 bg-blue-50 rounded-lg">
+                            <div class="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-2">Stream</div>
+                            <div id="home-stream" class="text-3xl font-bold text-gray-800">N/A</div>
+                        </div>
+                        <div class="p-6 bg-orange-50 rounded-lg">
+                            <div class="text-sm font-semibold text-orange-600 uppercase tracking-wide mb-2">Course</div>
+                            <div id="home-course" class="text-3xl font-bold text-gray-800">N/A</div>
+                        </div>
+                        <div class="p-6 bg-green-50 rounded-lg">
+                            <div class="text-sm font-semibold text-green-600 uppercase tracking-wide mb-2">College</div>
+                            <div id="home-college" class="text-3xl font-bold text-gray-800">N/A</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    <button id="streams-card" class="official-card p-8 text-center hover:scale-105 transition-transform">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📚</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-800 mb-3">Streams & Careers</h3>
+                        <p class="text-gray-600">Explore detailed information on academic streams, career paths, and future scope.</p>
+                    </button>
+                    <button id="colleges-card" class="official-card p-8 text-center hover:scale-105 transition-transform">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🏛️</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-orange-600 mb-3">College Directory</h3>
+                        <p class="text-gray-600">Find colleges and courses in J&K tailored to your interests and location.</p>
+                    </button>
+                    <button id="assessment-card" class="official-card p-8 text-center hover:scale-105 transition-transform">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🎯</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-green-600 mb-3">Take Assessment</h3>
+                        <p class="text-gray-600">Discover your ideal career path with our comprehensive psychometric quiz.</p>
+                    </button>
+                    <button id="find-matches-card" class="official-card p-8 text-center hover:scale-105 transition-transform">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🤝</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-purple-600 mb-3">Find Matches</h3>
+                        <p class="text-gray-600">Connect with students who share your interests and career aspirations.</p>
+                    </button>
+                    <!-- Mentorship and Counselling Card -->
+                    <button id="mentorship-card" class="official-card p-8 text-center hover:scale-105 transition-transform">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📚</span>
+                        </div>
+                       <h3 class="text-xl font-bold text-blue-800 mb-3">Mentorship & Counselling</h3>
+                        <p class="text-gray-600">Get guidance from seniors, faculty, and counsellors for academic and personal support.</p>
+                    </button>
+                    <!-- Add the back button to the home page -->
+                    <a href="#home" class="hidden"></a>
+                </div>
+
+                <!-- Timeline Tracker Section -->
+                <div class="official-card max-w-5xl mx-auto p-8 timeline-tracker">
+                    <div class="timeline-progress" id="timeline-progress"></div>
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-2xl font-bold text-blue-800">📅 Important Dates Timeline</h2>
+                        <div class="flex items-center space-x-4">
+                            <button id="timeline-prev" class="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
+                                <span class="text-blue-600">◀</span>
+                            </button>
+                            <span id="timeline-counter" class="text-sm font-medium text-gray-600">1-2 of 4</span>
+                            <button id="timeline-next" class="p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition">
+                                <span class="text-blue-600">▶</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="timeline-container">
+                        <!-- Timeline items will be populated dynamically -->
+                    </div>
+                    
+                    <div class="timeline-indicator" id="timeline-indicator">
+                        <!-- Dots will be populated dynamically -->
+                    </div>
+                </div>
+            </section>
+            
+            <section id="assessment-page" class="py-16 hidden">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Career Aptitude Assessment</h1>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Take our scientifically designed psychometric assessment to discover which academic streams and career paths align with your interests, personality, and aptitude.</p>
+                </div>
+                
+                <div class="official-card max-w-3xl mx-auto p-8">
+                    <h2 class="text-2xl font-semibold mb-8 text-center text-blue-800">Psychometric Assessment</h2>
+                    <div id="quiz-section">
+                        <div class="mb-6">
+                            <div class="bg-blue-100 h-2 rounded-full">
+                                <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                            <div class="text-sm text-gray-600 mt-2" id="progress-text">Question 1 of 8</div>
+                        </div>
+                        <p id="question-text" class="text-xl font-medium mb-6 text-gray-800"></p>
+                        <div id="options-container" class="space-y-4"></div>
+                        <button id="next-button" class="gov-btn-primary mt-8 w-full">Next Question</button>
+                    </div>
+                    <div id="quiz-complete" class="hidden text-center">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">✅</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-green-600 mb-4">Assessment Complete!</h3>
+                        <p class="text-gray-600 mb-8">Great job! Click below to see your personalized career recommendations based on your responses.</p>
+                        <button id="results-button" class="gov-btn-primary text-lg px-8 py-4">View My Career Profile</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="streams-careers-page" class="py-16 hidden">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Academic Streams & Career Mapping</h1>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto">Explore comprehensive information about different academic streams, course options, career pathways, and their growth potential. Make informed decisions about your educational journey.</p>
+                </div>
+                
+                <div class="official-card max-w-6xl mx-auto p-8">
+                    <div class="flex justify-center space-x-4 mb-12 flex-wrap gap-2">
+                        <button class="gov-tab-button active" data-stream="Science">
+                            <span class="text-lg mr-2">🔬</span>Science
+                        </button>
+                        <button class="gov-tab-button" data-stream="Arts">
+                            <span class="text-lg mr-2">📖</span>Arts
+                        </button>
+                        <button class="gov-tab-button" data-stream="Commerce">
+                            <span class="text-lg mr-2">💼</span>Commerce
+                        </button>
+                        <button class="gov-tab-button" data-stream="Engineering">
+                            <span class="text-lg mr-2">⚙️</span>Engineering
+                        </button>
+                    </div>
+                    
+                    <div id="stream-content" class="space-y-12">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                            <div>
+                                <h2 id="stream-title" class="text-3xl font-bold text-blue-800 mb-4">Science Stream</h2>
+                                <p id="stream-description" class="text-gray-700 text-lg leading-relaxed">The Science stream focuses on fundamental principles of the physical and natural world. It opens doors to a wide range of analytical and technical careers.</p>
+                                <div class="mt-6">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjBmOWZmIi8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiMwMDY2Y2MiLz4KPHN2ZyB4PSI1MCIgeT0iNjAiIHdpZHRoPSIxMDAiIGhlaWdodD0iODAiPgo8cGF0aCBkPSJNMTAgNDBMNDAgMTBMNzAgNDBMNDAgNzBaIiBmaWxsPSIjZmY2NjAwIi8+Cjwvc3ZnPgo8dGV4dCB4PSIyMDAiIHk9IjEwNSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjMzMzMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5TY2llbmNlIEZpZWxkPC90ZXh0Pgo8L3N2Zz4=" alt="Science Stream Illustration" class="course-image">
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-blue-800 mb-6">Career Growth Mapping</h3>
+                                <div class="chart-container">
+                                    <canvas id="careerMappingChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="official-card p-8">
+                            <h3 class="text-2xl font-bold text-blue-800 mb-8">Course Options & Growth Trends</h3>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                <div class="chart-container">
+                                    <canvas id="courseScopeChart"></canvas>
+                                </div>
+                                <div id="course-details" class="space-y-6">
+                                    <!-- Course details will be populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="mentorship-page" class="py-16 hidden">
+                <!-- Page Header -->
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Mentorship & Counselling</h1>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Connect with experienced seniors, dedicated faculty members, and professional counsellors 
+                        to get the support and guidance you need for your academic and personal journey.
+                    </p>
+                </div>
+
+                <!-- Senior Students -->
+                <div class="official-card max-w-5xl mx-auto p-8 mb-12">
+                    <h2 class="text-2xl font-semibold mb-8 text-center text-blue-800">Connect with Senior Students</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="senior-students-grid">
+                        <!-- Senior students populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Faculty Mentors -->
+                <div class="official-card max-w-5xl mx-auto p-8 mb-12">
+                    <h2 class="text-2xl font-semibold mb-8 text-center text-green-800">Faculty Mentors from Government Colleges</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="faculty-mentors-grid">
+                        <!-- Faculty mentors populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Counsellors for Girls -->
+                <div class="official-card max-w-5xl mx-auto p-8 bg-gradient-to-r from-pink-50 to-purple-50 border-2 border-pink-200">
+                    <h2 class="text-2xl font-bold mb-6 text-center text-purple-800">Counsellors for Girls - Safe Space & Support</h2>
+                    <p class="text-purple-600 max-w-3xl mx-auto text-center mb-6">
+                        A dedicated support system for girls with professional counsellors specializing in safety, 
+                        mental health, and career guidance. All conversations are completely confidential and secure.
+                    </p>
+                    <div class="bg-white p-4 rounded-lg border border-pink-200 mb-8 text-center">
+                        <p class="text-sm text-slate-600 font-medium">
+                            🔒 Complete Privacy Assured | 📞 24/7 Emergency Support: <strong>1091</strong> | 💬 Confidential Sessions Available
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="counsellors-grid">
+                        <!-- Counsellors populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Contact Modal -->
+                <div id="contact-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                        <h3 class="text-xl font-semibold mb-4" id="modal-title">Connect with Mentor</h3>
+                        <div id="modal-content">
+                            <!-- Content populated by JavaScript -->
+                        </div>
+                        <div class="flex gap-4 mt-6">
+                            <button id="close-modal" class="gov-btn-secondary flex-1">Close</button>
+                            <button id="confirm-contact" class="gov-btn-primary flex-1">Contact Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="profile" class="py-16 hidden">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Your Career Profile</h1>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto">Welcome to your personalized dashboard! Here are career and educational recommendations tailored specifically to your profile, interests, and assessment results.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+                    <div class="official-card p-8">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">Recommended Stream</h2>
+                        <div id="stream-result" class="text-center">
+                            <!-- Stream results will be populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="official-card p-8">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">Top Career Pathways</h2>
+                        <div class="chart-container">
+                            <canvas id="careerChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 official-card p-8">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-8">Recommended Colleges & Courses</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="recommended-colleges-list">
+                            <!-- Colleges will be populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="official-card p-8">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">Study Materials</h2>
+                        <ul id="study-materials-list" class="space-y-3">
+                            <!-- Study materials will be populated dynamically -->
+                        </ul>
+                    </div>
+                    <div class="official-card p-8">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">Latest Updates</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg">
+                                <span class="text-blue-600 text-xl">📢</span>
+                                <div>
+                                    <p class="font-medium text-blue-800">JEE Main 2026 Registration</p>
+                                    <p class="text-sm text-gray-600">Registration starts November 2025</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-4 bg-green-50 rounded-lg">
+                                <span class="text-green-600 text-xl">🎓</span>
+                                <div>
+                                    <p class="font-medium text-green-800">IIT Jammu Placements</p>
+                                    <p class="text-sm text-gray-600">Highest package reaches ₹53 LPA in 2025</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 p-4 bg-orange-50 rounded-lg">
+                                <span class="text-orange-600 text-xl">💰</span>
+                                <div>
+                                    <p class="font-medium text-orange-800">J&K Scholarship Scheme</p>
+                                    <p class="text-sm text-gray-600">New scholarship launched for engineering students</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="colleges" class="py-16 hidden">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">J&K Educational Institutions</h1>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto">Explore colleges and universities in Jammu & Kashmir. Filter by location, stream, and courses to find the perfect institution for your educational journey.</p>
+                </div>
+                
+                <div class="official-card p-8 max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label for="stream-filter" class="block text-gray-700 font-medium mb-2">Filter by Stream</label>
+                            <select id="stream-filter" class="gov-form-input w-full">
+                                <option value="All">All Streams</option>
+                                <option value="Science">Science</option>
+                                <option value="Arts">Arts</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Engineering">Engineering</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="course-filter" class="block text-gray-700 font-medium mb-2">Filter by Course</label>
+                            <select id="course-filter" class="gov-form-input w-full">
+                                <option value="All">All Courses</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="college-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Colleges will be populated dynamically -->
+                    </div>
+                    <div id="no-results" class="hidden text-center py-12">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No Results Found</h3>
+                        <p class="text-gray-500">Try adjusting your filters to see more colleges.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Chatbot Button - Bottom Right -->
+    <div class="chatbot-button" id="chatbot-button">
+        <div class="chatbot-tooltip">Need help? Chat with us!</div>
+        <span>🤖</span>
+    </div>
+
+    <!-- Find Matches Modal -->
+    <div id="matches-modal" class="gov-modal hidden">
+        <div class="gov-modal-content p-8 rounded-lg max-w-4xl w-full mx-4 relative">
+            <button id="close-matches-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">
+                ×
+            </button>
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-3xl">🤝</span>
+                </div>
+                <h2 class="text-3xl font-bold text-purple-600 mb-4">Find Your Study Matches</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Connect with fellow students who share your academic interests and career aspirations. Build your professional network early!</p>
+            </div>
+            
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-blue-800">Students with Similar Interests</h3>
+                    <span id="matches-count" class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">12 matches found</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="matches-container">
+                    <!-- Student matches will be populated dynamically -->
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="gov-btn-primary" onclick="alert('🤝 Full networking features coming soon in mobile app!')">
+                    View All Matches
+                </button>
+            </div>
+        </div>
+    </div>
+
+       
+    <div id="college-modal" class="gov-modal hidden">
+        <div class="gov-modal-content p-8 rounded-lg max-w-4xl w-full mx-4 relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">
+                ×
+            </button>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h2 id="modal-title" class="text-3xl font-bold text-blue-800 mb-4"></h2>
+                    <p id="modal-description" class="text-gray-700 mb-6 leading-relaxed"></p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <div class="font-semibold text-blue-800">Stream</div>
+                            <div id="modal-stream" class="text-gray-700"></div>
+                        </div>
+                        <div class="bg-orange-50 p-3 rounded-lg">
+                            <div class="font-semibold text-orange-800">Location</div>
+                            <div id="modal-location" class="text-gray-700"></div>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <div class="font-semibold text-green-800">Admission Rate</div>
+                            <div id="modal-admission-rate" class="text-gray-700"></div>
+                        </div>
+                        <div class="bg-purple-50 p-3 rounded-lg">
+                            <div class="font-semibold text-purple-800">Courses</div>
+                            <div id="modal-courses" class="text-gray-700 text-xs"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-blue-800 mb-4">Enrollment Growth Trend</h3>
+                    <div class="chart-container">
+                        <canvas id="collegeGrowthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Timeline Data
+            const timelineData = [
+                {
+                    type: 'Competitive Exam Application',
+                    title: 'JEE Main 2026 Application',
+                    date: 'Nov 15 - Dec 20, 2025',
+                    status: 'upcoming',
+                    description: 'Joint Entrance Examination for Engineering Admissions',
+                    icon: '📝',
+                    urgency: 'high'
+                },
+                {
+                    type: 'Competitive Exam Conduction',
+                    title: 'JEE Main 2026 Exam',
+                    date: 'Jan 28 - Feb 5, 2026',
+                    status: 'upcoming',
+                    description: 'National level engineering entrance examination',
+                    icon: '📖',
+                    urgency: 'high'
+                },
+                {
+                    type: 'College Application',
+                    title: 'J&K College Applications',
+                    date: 'Mar 1 - Apr 15, 2026',
+                    status: 'upcoming',
+                    description: 'State college admission application period',
+                    icon: '🏛️',
+                    urgency: 'medium'
+                },
+                {
+                    type: 'Entrance Exam',
+                    title: 'State Entrance Exam',
+                    date: 'Apr 20 - May 10, 2026',
+                    status: 'upcoming',
+                    description: 'J&K State entrance examination for various courses',
+                    icon: '🎯',
+                    urgency: 'medium'
+                }
+            ];
+
+            // --- Student Matches Data
+            const studentMatches = {
+                'Science': [
+                    { name: 'Arjun Sharma', initials: 'AS', location: 'Jammu', course: 'B.Sc. Physics', match: '95%', online: true, college: 'Govt. Degree College Jammu', interests: ['Research', 'Quantum Physics'] },
+                    { name: 'Priya Koul', initials: 'PK', location: 'Srinagar', course: 'B.Sc. Chemistry', match: '92%', online: false, college: 'Kashmir University', interests: ['Lab Work', 'Organic Chemistry'] },
+                    { name: 'Rohit Singh', initials: 'RS', location: 'Kathua', course: 'B.Sc. Mathematics', match: '88%', online: true, college: 'Govt. College Kathua', interests: ['Problem Solving', 'Statistics'] },
+                    { name: 'Sneha Devi', initials: 'SD', location: 'Udhampur', course: 'B.Sc. Biology', match: '90%', online: true, college: 'Govt. Degree College Udhampur', interests: ['Medical Research', 'Botany'] },
+                    { name: 'Vikram Gupta', initials: 'VG', location: 'Jammu', course: 'B.Sc. IT', match: '87%', online: false, college: 'University of Jammu', interests: ['Programming', 'AI/ML'] },
+                    { name: 'Kavya Bhat', initials: 'KB', location: 'Srinagar', course: 'B.Sc. Physics', match: '93%', online: true, college: 'NIT Srinagar', interests: ['Theoretical Physics', 'Space Science'] }
+                ],
+                'Arts': [
+                    { name: 'Aanand Kumar', initials: 'AK', location: 'Srinagar', course: 'B.A. History', match: '96%', online: true, college: 'Kashmir University', interests: ['Ancient History', 'Archaeology'] },
+                    { name: 'Meera Devi', initials: 'MD', location: 'Jammu', course: 'B.A. English', match: '89%', online: false, college: 'Govt. MAM College', interests: ['Literature', 'Creative Writing'] },
+                    { name: 'Sanjay Pandita', initials: 'SP', location: 'Baramulla', course: 'B.A. Political Science', match: '91%', online: true, college: 'Govt. Degree College Baramulla', interests: ['Civil Services', 'Public Policy'] },
+                    { name: 'Ritu Sharma', initials: 'RS', location: 'Rajouri', course: 'B.A. Sociology', match: '85%', online: true, college: 'Govt. College Rajouri', interests: ['Social Work', 'Community Development'] },
+                    { name: 'Mohit Kesar', initials: 'MK', location: 'Jammu', course: 'B.A. Economics', match: '88%', online: false, college: 'University of Jammu', interests: ['Economic Policy', 'Finance'] },
+                    { name: 'Divya Kumari', initials: 'DK', location: 'Poonch', course: 'B.A. Philosophy', match: '92%', online: true, college: 'Govt. Degree College Poonch', interests: ['Ethics', 'Logic'] }
+                ],
+                'Commerce': [
+                    { name: 'Rajesh Verma', initials: 'RV', location: 'Jammu', course: 'B.Com.', match: '94%', online: true, college: 'Govt. Commerce College', interests: ['Accounting', 'Taxation'] },
+                    { name: 'Pooja Devi', initials: 'PD', location: 'Srinagar', course: 'BBA', match: '91%', online: false, college: 'Kashmir University', interests: ['Management', 'Marketing'] },
+                    { name: 'Amit Choudhary', initials: 'AC', location: 'Kathua', course: 'B.Com.', match: '87%', online: true, college: 'Govt. College Kathua', interests: ['Banking', 'Finance'] },
+                    { name: 'Simran Kaur', initials: 'SK', location: 'Jammu', course: 'BCA', match: '89%', online: true, college: 'University of Jammu', interests: ['Business Analytics', 'E-commerce'] },
+                    { name: 'Deepak Singh', initials: 'DS', location: 'Udhampur', course: 'M.Com.', match: '92%', online: false, college: 'Govt. Degree College Udhampur', interests: ['Financial Planning', 'Investment'] },
+                    { name: 'Nisha Rani', initials: 'NR', location: 'Samba', course: 'B.Com.', match: '86%', online: true, college: 'Govt. College Samba', interests: ['Cost Accounting', 'Auditing'] }
+                ],
+                'Engineering': [
+                    { name: 'Karan Thakur', initials: 'KT', location: 'Jammu', course: 'B.Tech CSE', match: '97%', online: true, college: 'IIT Jammu', interests: ['AI/ML', 'Software Development'] },
+                    { name: 'Anjali Pandey', initials: 'AP', location: 'Srinagar', course: 'B.Tech ECE', match: '93%', online: false, college: 'NIT Srinagar', interests: ['VLSI Design', 'Communication'] },
+                    { name: 'Vishal Kumar', initials: 'VK', location: 'Katra', course: 'B.Tech ME', match: '90%', online: true, college: 'SMVDU', interests: ['Robotics', 'Automation'] },
+                    { name: 'Sakshi Gupta', initials: 'SG', location: 'Jammu', course: 'B.Tech Civil', match: '88%', online: true, college: 'IIT Jammu', interests: ['Structural Design', 'Urban Planning'] },
+                    { name: 'Rahul Sharma', initials: 'RS', location: 'Srinagar', course: 'B.Tech EE', match: '91%', online: false, college: 'NIT Srinagar', interests: ['Power Systems', 'Renewable Energy'] },
+                    { name: 'Neha Devi', initials: 'ND', location: 'Katra', course: 'B.Tech Chemical', match: '89%', online: true, college: 'SMVDU', interests: ['Process Engineering', 'Environmental Tech'] }
+                ]
+            };
+            
+            // --- Enhanced Data with Images
+            const questions = [
+                {
+                    q: "I enjoy solving logical puzzles and complex problems that require analytical thinking.",
+                    options: [
+                        { text: "Strongly agree", values: { science: 3, engineering: 2 } },
+                        { text: "Agree", values: { science: 2, engineering: 1 } },
+                        { text: "Neutral", values: { science: 1 } },
+                        { text: "Disagree", values: { science: 0 } },
+                    ]
+                },
+                {
+                    q: "I am creative and enjoy expressing myself through writing, art, or cultural activities.",
+                    options: [
+                        { text: "Strongly agree", values: { arts: 3 } },
+                        { text: "Agree", values: { arts: 2 } },
+                        { text: "Neutral", values: { arts: 1 } },
+                        { text: "Disagree", values: { arts: 0 } },
+                    ]
+                },
+                {
+                    q: "I am fascinated by business operations, economics, and financial markets.",
+                    options: [
+                        { text: "Strongly agree", values: { commerce: 3 } },
+                        { text: "Agree", values: { commerce: 2 } },
+                        { text: "Neutral", values: { commerce: 1 } },
+                        { text: "Disagree", values: { commerce: 0 } },
+                    ]
+                },
+                {
+                    q: "I am curious about scientific discoveries, experiments, and research methodologies.",
+                    options: [
+                        { text: "Strongly agree", values: { science: 3, engineering: 1 } },
+                        { text: "Agree", values: { science: 2, engineering: 1 } },
+                        { text: "Neutral", values: { science: 1 } },
+                        { text: "Disagree", values: { science: 0 } },
+                    ]
+                },
+                {
+                    q: "I enjoy reading about history, sociology, politics, and human behavior patterns.",
+                    options: [
+                        { text: "Strongly agree", values: { arts: 3 } },
+                        { text: "Agree", values: { arts: 2 } },
+                        { text: "Neutral", values: { arts: 1 } },
+                        { text: "Disagree", values: { arts: 0 } },
+                    ]
+                },
+                {
+                    q: "I am good with numbers, enjoy financial planning, and understanding market trends.",
+                    options: [
+                        { text: "Strongly agree", values: { commerce: 3 } },
+                        { text: "Agree", values: { commerce: 2 } },
+                        { text: "Neutral", values: { commerce: 1 } },
+                        { text: "Disagree", values: { commerce: 0 } },
+                    ]
+                },
+                {
+                    q: "I like building things, understanding how machines work, and creating technical solutions.",
+                    options: [
+                        { text: "Strongly agree", values: { engineering: 3, science: 1 } },
+                        { text: "Agree", values: { engineering: 2 } },
+                        { text: "Neutral", values: { engineering: 1 } },
+                        { text: "Disagree", values: { engineering: 0 } },
+                    ]
+                },
+                {
+                    q: "I am interested in technology, computer programming, and digital innovation.",
+                    options: [
+                        { text: "Strongly agree", values: { engineering: 3, science: 2 } },
+                        { text: "Agree", values: { engineering: 2, science: 1 } },
+                        { text: "Neutral", values: { engineering: 1 } },
+                        { text: "Disagree", values: { engineering: 0 } },
+                    ]
+                },
+            ];
+            
+            // Enhanced college data with realistic images
+            const collegeData = [
+                // Engineering Colleges with Images
+                { 
+                    name: 'IIT Jammu', 
+                    stream: 'Engineering', 
+                    courses: ['B.Tech (CSE)', 'B.Tech (EE)', 'B.Tech (ME)', 'B.Tech (CE)', 'B.Tech (Chemical)'], 
+                    location: 'Jammu', 
+                    description: 'Premier engineering institute with world-class faculty and research facilities. Highest package of ₹53 LPA in 2025. Top choice for engineering aspirants with state-of-the-art laboratories and industry partnerships.', 
+                    admissionRate: '1%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjQwIiBmaWxsPSIjZjBmOWZmIi8+CjxyZWN0IHg9IjUwIiB5PSI4MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI4MCIgZmlsbD0iI2VlNzYyNCIvPgo8cmVjdCB4PSI4MCIgeT0iNjAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiNmZmY1ZjAiLz4KPHN2ZyB4PSIxNzUiIHk9IjkwIiB3aWR0aD0iNTAiIGhlaWdodD0iNjAiPgo8cGF0aCBkPSJNMCAwTDUwIDBoMHY2MEwwIDYweiIgZmlsbD0iIzY2NjY2NiIvPgo8L3N2Zz4KPHRleHQgeD0iMjAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzMzNDU1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPklJVCBKYW1tdSBDYW1wdXMgPC90ZXh0Pgo8L3N2Zz4=',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [280, 320, 360, 400, 440] } 
+                },
+                { 
+                    name: 'NIT Srinagar', 
+                    stream: 'Engineering', 
+                    courses: ['B.Tech (CSE)', 'B.Tech (ECE)', 'B.Tech (EE)', 'B.Tech (ME)', 'B.Tech (CE)', 'B.Tech (IT)'], 
+                    location: 'Srinagar', 
+                    description: 'National Institute of Technology with excellent placement record and scenic campus. Average package ₹4.8 LPA with strong alumni network in tech industry and research organizations.', 
+                    admissionRate: '8%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjQwIiBmaWxsPSIjZjVmNWY1Ii8+CjxyZWN0IHg9IjQwIiB5PSI3MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNkNDM5MzkiLz4KPHN2ZyB4PSI2MCIgeT0iNTAiIHdpZHRoPSIyODAiIGhlaWdodD0iMjAiPgo8cmVjdCB3aWR0aD0iMjgwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjZmZmNWYwIi8+Cjwvc3ZnPgo8Y2lyY2xlIGN4PSIyMDAiIGN5PSIxMjAiIHI9IjE1IiBmaWxsPSIjZmZmIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMzMzQ1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5OSVQgU3JpbmFnYXIgQ2FtcHVzPC90ZXh0Pgo8L3N2Zz4=',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [899, 920, 945, 980, 1020] } 
+                },
+                { 
+                    name: 'SMVDU Katra', 
+                    stream: 'Engineering', 
+                    courses: ['B.Tech (CSE)', 'B.Tech (ECE)', 'B.Tech (ME)', 'B.Tech (Architecture)'], 
+                    location: 'Katra', 
+                    description: 'Shri Mata Vaishno Devi University offering quality engineering education in serene environment. Known for innovation, research excellence, and holistic development of students.', 
+                    admissionRate: '12%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjQwIiBmaWxsPSIjZWRmNWZmIi8+CjxwYXRoIGQ9Ik01MCA2MEw3MCA0MEwzNTAgNDBMMzcwIDYwTDM3MCAyMDBMNTAgMjAwWiIgZmlsbD0iIzQ3ODM1NiIvPgo8cmVjdCB4PSI4MCIgeT0iNzAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMTIwIiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEzMCIgcj0iMjAiIGZpbGw9IiNmZmE0MjUiLz4KPHRleHQgeD0iMjAwIiB5PSIyMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzMzNDU1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPlNNVkRVIEthdHJhIENhbXB1czwvdGV4dD4KPC9zdmc+',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [850, 880, 910, 940, 970] } 
+                },
+                
+                // Traditional Colleges with Images
+                { 
+                    name: 'Govt. Degree College, Jammu', 
+                    stream: 'Science', 
+                    courses: ['B.Sc. (Physics)', 'B.Sc. (Chemistry)', 'B.Sc. (Math)', 'B.Sc. (Biology)'], 
+                    location: 'Jammu', 
+                    description: 'Leading institution with strong focus on scientific research and academic excellence. Well-equipped laboratories, experienced faculty, and excellent track record in competitive exams.', 
+                    admissionRate: '75%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNmOGZhZmMiLz48cmVjdCB4PSI2MCIgeT0iODAiIHdpZHRoPSIyODAiIGhlaWdodD0iODAiIGZpbGw9IiMwMDY2Y2MiLz48cmVjdCB4PSI4MCIgeT0iNjAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMjAiIGZpbGw9IiNmZmY1ZjAiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSIxMjAiIHI9IjE1IiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iMjAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzNDU1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkdvdnQuIENvbGxlZ2UgSmFtbXU8L3RleHQ+PC9zdmc+',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [550, 580, 620, 650, 680] } 
+                },
+                { 
+                    name: 'Govt. Degree College, Srinagar', 
+                    stream: 'Arts', 
+                    courses: ['B.A. (History)', 'B.A. (Sociology)', 'B.A. (Political Science)', 'B.A. (English)'], 
+                    location: 'Srinagar', 
+                    description: 'Prestigious college with rich academic heritage and vibrant environment for humanities. Hub for intellectual discussions, cultural events, and civil services preparation.', 
+                    admissionRate: '80%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjQwIiBmaWxsPSIjZmVmN2YwIi8+CjxyZWN0IHg9IjUwIiB5PSI3MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiNhYzJiNDkiLz4KPHN2ZyB4PSI3MCIgeT0iNTAiIHdpZHRoPSIyNjAiIGhlaWdodD0iMjAiPgo8cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjZmZmNWYwIi8+Cjwvc3ZnPgo8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxMjAiIHI9IjEwIiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjI1MCIgY3k9IjEyMCIgcj0iMTAiIGZpbGw9IiNmZmYiLz4KPHRleHQgeD0iMjAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzNDU1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPkdvdnQuIENvbGxlZ2UgU3JpbmFnYXI8L3RleHQ+Cjwvc3ZnPg==',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [480, 500, 510, 530, 540] } 
+                },
+                { 
+                    name: 'Govt. College for Commerce, Jammu', 
+                    stream: 'Commerce', 
+                    courses: ['B.Com.', 'M.Com.', 'BBA'], 
+                    location: 'Jammu', 
+                    description: 'Specialized commerce college with strong foundation in accounting, finance, and trade. High placement rate in local businesses, banks, and financial institutions.', 
+                    admissionRate: '82%', 
+                    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDQwMCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjQwIiBmaWxsPSIjZmVmNGUzIi8+CjxyZWN0IHg9IjQwIiB5PSI2MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNkYTYzMjgiLz4KPHN2ZyB4PSI2MCIgeT0iNDAiIHdpZHRoPSIyODAiIGhlaWdodD0iMjAiPgo8cmVjdCB3aWR0aD0iMjgwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjZmZmNWYwIi8+Cjwvc3ZnPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIHI9IjE1IiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iMjgwIiBjeT0iMTIwIiByPSIxNSIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMzMzQ1NTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5Db21tZXJjZSBDb2xsZWdlIEphbW11PC90ZXh0Pjwvc3ZnPg==',
+                    growthData: { labels: ['2020', '2021', '2022', '2023', '2024'], enrollment: [420, 440, 450, 460, 470] } 
+                },
+            ];
+            
+            // Enhanced study materials with images
+            const studyMaterials = {
+                'Science': [
+                    '📚 Physics Class 12 NCERT', 
+                    '🧪 Chemistry Class 12 NCERT', 
+                    '🔬 Biology Class 12 NCERT', 
+                    '📐 Mathematics Class 12 NCERT',
+                    '🧬 Laboratory Manuals & Practical Guides'
+                ],
+                'Arts': [
+                    '📜 History of India (Class 12)', 
+                    '👥 Sociology (Class 12)', 
+                    '🏛️ Political Science (Class 12)',
+                    '📖 English Literature & Language',
+                    '🌍 Geography & Social Studies'
+                ],
+                'Commerce': [
+                    '💼 Accountancy Class 12', 
+                    '📊 Business Studies (Class 12)', 
+                    '💰 Economics (Class 12)',
+                    '📈 Mathematics for Commerce',
+                    '🏦 Banking & Finance Fundamentals'
+                ],
+                'Engineering': [
+                    '📘 JEE Main Preparation Books', 
+                    '⚛️ Physics for JEE by HC Verma', 
+                    '🔢 Mathematics by RD Sharma', 
+                    '🧪 Chemistry by OP Tandon', 
+                    '📝 Previous Year JEE Papers',
+                    '⚙️ Engineering Drawing Fundamentals',
+                    '💻 Programming & Computer Science Basics'
+                ]
+            };
+
+            // Enhanced stream data with professional information
+            const streamData = {
+                'Science': {
+                    title: 'Science Stream',
+                    description: 'The Science stream focuses on fundamental principles of the physical and natural world. It provides a strong foundation for research, innovation, and technical careers across various industries.',
+                    degreeCourses: ['B.Sc. (Physics)', 'B.Sc. (Chemistry)', 'B.Sc. (Mathematics)', 'B.Sc. (Biology)', 'B.Sc. (IT)'],
+                    careerMapping: { labels: ['Research Scientist', 'Medical Professional', 'Data Analyst', 'Lab Technician'], scores: [90, 85, 80, 75] },
+                    courseScope: { labels: ['2020', '2021', '2022', '2023', '2024'], data: [{ name: 'Research Jobs', values: [75, 78, 82, 85, 88] }, { name: 'Medical Field', values: [70, 72, 78, 85, 90] }] },
+                    courseDetails: [
+                        '🔬 B.Sc. (Physics): Study of fundamental laws governing the universe. Opens doors to research, teaching, and high-tech industries.',
+                        '🧪 B.Sc. (Chemistry): Exploration of matter and its transformations. Career paths in pharmaceuticals, R&D, and chemical industries.',
+                        '📐 B.Sc. (Mathematics): The language of science and logic. Essential for data science, finance, actuarial science, and software development.'
+                    ]
+                },
+                'Arts': {
+                    title: 'Arts & Humanities Stream',
+                    description: 'The Arts stream encompasses humanities and social sciences, developing critical thinking, communication skills, and cultural understanding essential for leadership roles in society.',
+                    degreeCourses: ['B.A. (History)', 'B.A. (Political Science)', 'B.A. (Sociology)', 'B.A. (English)', 'B.A. (Economics)'],
+                    careerMapping: { labels: ['Civil Services', 'Journalism & Media', 'Legal Profession', 'Education & Research'], scores: [95, 85, 80, 75] },
+                    courseScope: { labels: ['2020', '2021', '2022', '2023', '2024'], data: [{ name: 'Civil Services', values: [65, 68, 72, 75, 78] }, { name: 'Media & Journalism', values: [60, 65, 70, 75, 80] }] },
+                    courseDetails: [
+                        '📜 B.A. (History): Study of human civilization and cultural evolution. Excellent preparation for civil services, research, and cultural preservation.',
+                        '👥 B.A. (Sociology): Understanding society, social behavior, and community dynamics. Ideal for social work, policy-making, and development sectors.',
+                        '🏛️ B.A. (Political Science): Analysis of governance, political systems, and public policy. Essential for civil services, journalism, and public administration.'
+                    ]
+                },
+                'Commerce': {
+                    title: 'Commerce & Business Stream',
+                    description: 'The Commerce stream provides comprehensive knowledge of business operations, financial management, and economic principles, preparing students for the dynamic business world.',
+                    degreeCourses: ['B.Com.', 'B.B.A.', 'B.C.A.', 'M.Com.'],
+                    careerMapping: { labels: ['Chartered Accountant', 'Financial Analyst', 'Business Manager', 'Entrepreneur'], scores: [95, 90, 85, 80] },
+                    courseScope: { labels: ['2020', '2021', '2022', '2023', '2024'], data: [{ name: 'Accounting & Finance', values: [82, 85, 88, 90, 93] }, { name: 'Business Management', values: [75, 78, 82, 85, 88] }] },
+                    courseDetails: [
+                        '💼 B.Com.: Comprehensive business education covering accounting, finance, and taxation. Gateway to CA, CS, and CMA certifications.',
+                        '📊 B.B.A.: Focus on business administration and management principles. Excellent foundation for MBA and corporate leadership roles.',
+                        '📈 M.Com.: Advanced commerce degree for specialized knowledge in finance, accounting, and business research.'
+                    ]
+                },
+                'Engineering': {
+                    title: 'Engineering & Technology Stream',
+                    description: 'Professional engineering programs combining theoretical knowledge with practical application. Engineering offers diverse specializations with excellent career prospects in technology and innovation.',
+                    degreeCourses: ['B.Tech (CSE)', 'B.Tech (ECE)', 'B.Tech (Mechanical)', 'B.Tech (Civil)', 'B.Tech (Electrical)'],
+                    careerMapping: { labels: ['Software Engineer', 'Data Scientist', 'Product Manager', 'Research Engineer'], scores: [98, 95, 90, 85] },
+                    courseScope: { labels: ['2020', '2021', '2022', '2023', '2024'], data: [{ name: 'Software Engineering', values: [90, 93, 95, 97, 99] }, { name: 'Core Engineering', values: [82, 85, 88, 90, 92] }] },
+                    courseDetails: [
+                        '💻 B.Tech (CSE): Computer Science Engineering with focus on software development, AI, and system design. Highest demand in IT industry with global opportunities.',
+                        '📡 B.Tech (ECE): Electronics & Communication Engineering covering digital systems, telecommunications, and signal processing. Core engineering with diverse applications.',
+                        '⚙️ B.Tech (Mechanical): Traditional engineering branch dealing with machines, manufacturing, and energy systems. Opportunities in automotive, aerospace, and manufacturing industries.'
+                    ]
+                }
+            };
+            
+            // Initialize data structures
+            const coursesByStream = {};
+            collegeData.forEach(college => {
+                if (!coursesByStream[college.stream]) {
+                    coursesByStream[college.stream] = new Set();
+                }
+                college.courses.forEach(course => coursesByStream[college.stream].add(course));
+            });
+            const allCourses = Array.from(new Set(collegeData.flatMap(c => c.courses))).sort();
+            
+            let careerMappingChartInstance = null;
+            let courseScopeChartInstance = null;
+            let collegeGrowthChartInstance = null;
+
+            // Timeline state variables
+            let currentTimelineIndex = 0;
+            const itemsPerPage = 2;
+            let timelineInterval = null;
+
+            // DOM Elements
+            const authSection = document.getElementById('auth-section');
+            const mainContent = document.getElementById('main-content');
+            const navLinks = document.getElementById('nav-links');
+            const authForm = document.getElementById('auth-form');
+            const authTitle = document.getElementById('auth-title');
+            const authButton = document.getElementById('auth-button');
+            const toggleAuthModeButton = document.getElementById('toggle-auth-mode');
+            const registerFields = document.getElementById('register-fields');
+            const errorMessage = document.getElementById('error-message');
+            const quizSection = document.getElementById('quiz-section');
+            const quizCompleteSection = document.getElementById('quiz-complete');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const nextButton = document.getElementById('next-button');
+            const resultsButton = document.getElementById('results-button');
+            const streamResultDiv = document.getElementById('stream-result');
+            const recommendedCollegesList = document.getElementById('recommended-colleges-list');
+            const studyMaterialsList = document.getElementById('study-materials-list');
+            const homeStream = document.getElementById('home-stream');
+            const homeCourse = document.getElementById('home-course');
+            const homeCollege = document.getElementById('home-college');
+            const streamsCard = document.getElementById('streams-card');
+            const collegesCard = document.getElementById('colleges-card');
+            const assessmentCard = document.getElementById('assessment-card');
+            const findMatchesCard = document.getElementById('find-matches-card');
+            const mentorshipCard = document.getElementById('mentorship-card');
+            const tabButtons = document.querySelectorAll('.gov-tab-button');
+            const streamTitle = document.getElementById('stream-title');
+            const streamDescription = document.getElementById('stream-description');
+            const courseDetails = document.getElementById('course-details');
+            const streamFilter = document.getElementById('stream-filter');
+            const courseFilter = document.getElementById('course-filter');
+            const collegeList = document.getElementById('college-list');
+            const noResults = document.getElementById('no-results');
+            const collegeModal = document.getElementById('college-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalStream = document.getElementById('modal-stream');
+            const modalCourses = document.getElementById('modal-courses');
+            const modalLocation = document.getElementById('modal-location');
+            const modalAdmissionRate = document.getElementById('modal-admission-rate');
+            const collegeGrowthChartCanvas = document.getElementById('collegeGrowthChart');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const contactModal = document.getElementById('contact-modal');
+            const contactModalContent = document.getElementById('modal-content');
+            const contactModalTitle = document.getElementById('modal-title');
+            const closeContactModal = document.getElementById('close-modal');
+            const confirmContact = document.getElementById('confirm-contact');
+
+            // Timeline DOM elements
+            const timelineContainer = document.getElementById('timeline-container');
+            const timelineIndicator = document.getElementById('timeline-indicator');
+            const timelinePrev = document.getElementById('timeline-prev');
+            const timelineNext = document.getElementById('timeline-next');
+            const timelineCounter = document.getElementById('timeline-counter');
+            const timelineProgress = document.getElementById('timeline-progress');
+
+            // New DOM elements for chatbot and app download
+            const chatbotButton = document.getElementById('chatbot-button');
+            const appDownloadBtn = document.getElementById('app-download-btn');
+
+            // Find Matches DOM elements
+            const matchesModal = document.getElementById('matches-modal');
+            const closeMatchesModalButton = document.getElementById('close-matches-modal');
+            const matchesContainer = document.getElementById('matches-container');
+            const matchesCount = document.getElementById('matches-count');
+
+            // State Variables
+            let authMode = 'login';
+            let users = JSON.parse(localStorage.getItem('users')) || {};
+            let currentUser = null;
+            let currentQuestion = 0;
+            let scienceScore = 0;
+            let artsScore = 0;
+            let commerceScore = 0;
+            let engineeringScore = 0;
+            let selectedOption = null;
+            let careerChartInstance = null;
+
+            // --- Consolidated Data
+            const seniorStudents = [
+                { name: 'Aarav Sharma', field: 'Engineering', year: 'Final Year', email: 'aarav@example.com' },
+                { name: 'Meera Patel', field: 'Medicine', year: '3rd Year', email: 'meera@example.com' },
+                { name: 'Aditya Singh', field: 'Commerce', year: 'Final Year', email: 'aditya@example.com' }
+            ];
+            
+            const facultyMentors = [
+                { name: 'Prof. Anil Verma', subject: 'Physics', college: 'Govt. Science College', email: 'anil@example.com' },
+                { name: 'Dr. Kavita Nair', subject: 'Psychology', college: 'Govt. Arts College', email: 'kavita@example.com' },
+                { name: 'Prof. Ramesh Gupta', subject: 'Computer Science', college: 'Govt. Engineering College', email: 'ramesh@example.com' }
+            ];
+            
+            const counsellors = [
+                { name: 'Ms. Priya Mehta', expertise: 'Mental Health & Career Guidance', email: 'priya@example.com' },
+                { name: 'Dr. Sneha Iyer', expertise: 'Women\'s Safety & Counselling', email: 'sneha@example.com' }
+            ];
+
+            // --- Functions from previous app.js, now consolidated ---
+
+            function populateMentorshipData() {
+                populateSeniorStudents();
+                populateFacultyMentors();
+                populateCounsellors();
+            }
+
+            function populateSeniorStudents() {
+                const container = document.getElementById('senior-students-grid');
+                if (!container) return;
+                
+                container.innerHTML = seniorStudents.map(student => `
+                    <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+                        <h4 class="text-lg font-semibold text-blue-800 mb-2">${student.name}</h4>
+                        <p class="text-sm text-gray-600 mb-1">Field: ${student.field}</p>
+                        <p class="text-sm text-gray-600 mb-3">Year: ${student.year}</p>
+                        <button class="gov-btn-primary w-full" onclick="openContactModal('${student.name}', '${student.email}')">Connect</button>
+                    </div>
+                `).join('');
+            }
+            
+            function populateFacultyMentors() {
+                const container = document.getElementById('faculty-mentors-grid');
+                if (!container) return;
+                
+                container.innerHTML = facultyMentors.map(mentor => `
+                    <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+                        <h4 class="text-lg font-semibold text-green-800 mb-2">${mentor.name}</h4>
+                        <p class="text-sm text-gray-600 mb-1">Subject: ${mentor.subject}</p>
+                        <p class="text-sm text-gray-600 mb-1">College: ${mentor.college}</p>
+                        <button class="gov-btn-primary w-full" onclick="openContactModal('${mentor.name}', '${mentor.email}')">Connect</button>
+                    </div>
+                `).join('');
+            }
+            
+            function populateCounsellors() {
+                const container = document.getElementById('counsellors-grid');
+                if (!container) return;
+                
+                container.innerHTML = counsellors.map(counsellor => `
+                    <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+                        <h4 class="text-lg font-semibold text-purple-800 mb-2">${counsellor.name}</h4>
+                        <p class="text-sm text-gray-600 mb-3">Expertise: ${counsellor.expertise}</p>
+                        <button class="gov-btn-primary w-full" onclick="openContactModal('${counsellor.name}', '${counsellor.email}')">Connect</button>
+                    </div>
+                `).join('');
+            }
+
+            function openContactModal(name, email) {
+                if (contactModal && contactModalContent && contactModalTitle) {
+                    contactModalTitle.textContent = `Connect with ${name}`;
+                    contactModalContent.innerHTML = `
+                        <p class="text-gray-700 mb-4">Send a message to <strong>${name}</strong> at <em>${email}</em>.</p>
+                        <textarea class="w-full p-2 border rounded-lg mb-4" rows="4" placeholder="Type your message here..."></textarea>
+                    `;
+                    contactModal.classList.remove('hidden');
+                }
+            }
+
+
+            // --- Timeline Functions
+            function initializeTimeline() {
+                renderTimelineItems();
+                renderTimelineIndicator();
+                updateTimelineProgress();
+                startAutoRotation();
+            }
+
+            function renderTimelineItems() {
+                const startIndex = currentTimelineIndex * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentItems = timelineData.slice(startIndex, endIndex);
+
+                timelineContainer.innerHTML = '';
+                
+                currentItems.forEach((item, index) => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = `timeline-item p-6 ${item.status}`;
+                    
+                    const urgencyClass = item.urgency === 'high' ? 'urgent' : 
+                                       item.urgency === 'medium' ? 'upcoming' : 'active';
+                    timelineItem.classList.add(urgencyClass);
+                    
+                    timelineItem.innerHTML = `
+                        <div class="timeline-content">
+                            <div class="flex items-start space-x-4">
+                                <div class="text-3xl">${item.icon}</div>
+                                <div class="flex-1">
+                                    <div class="timeline-date text-sm">
+                                        ${item.date}
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-800 mb-2">${item.title}</h3>
+                                    <p class="text-sm text-gray-600 mb-3">${item.description}</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-3 py-1 text-xs font-medium rounded-full ${
+                                            item.urgency === 'high' ? 'bg-red-100 text-red-800' :
+                                            item.urgency === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                                            'bg-green-100 text-green-800'
+                                        }">
+                                            ${item.type}
+                                        </span>
+                                        <span class="text-xs text-gray-500 font-medium">
+                                            ${item.urgency === 'high' ? 'HIGH PRIORITY' :
+                                              item.urgency === 'medium' ? 'MEDIUM PRIORITY' : 'UPCOMING'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    timelineContainer.appendChild(timelineItem);
+                    
+                    // Add fade-in animation
+                    setTimeout(() => {
+                        timelineItem.classList.add('fade-in');
+                    }, index * 100);
+                });
+
+                // Update counter
+                const totalPages = Math.ceil(timelineData.length / itemsPerPage);
+                timelineCounter.textContent = `${currentTimelineIndex + 1}-${Math.min(currentTimelineIndex + 1, totalPages)} of ${totalPages}`;
+            }
+
+            function renderTimelineIndicator() {
+                const totalPages = Math.ceil(timelineData.length / itemsPerPage);
+                timelineIndicator.innerHTML = '';
+                
+                for (let i = 0; i < totalPages; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = `timeline-dot ${i === currentTimelineIndex ? 'active' : ''}`;
+                    dot.addEventListener('click', () => goToTimelinePage(i));
+                    timelineIndicator.appendChild(dot);
+                }
+            }
+
+            function updateTimelineProgress() {
+                const totalPages = Math.ceil(timelineData.length / itemsPerPage);
+                const progress = ((currentTimelineIndex + 1) / totalPages) * 100;
+                timelineProgress.style.width = `${progress}%`;
+            }
+
+            function goToTimelinePage(pageIndex) {
+                if (pageIndex < 0 || pageIndex >= Math.ceil(timelineData.length / itemsPerPage)) return;
+                
+                // Add fade-out animation to current items
+                const currentItems = timelineContainer.querySelectorAll('.timeline-item');
+                currentItems.forEach(item => item.classList.add('fade-out'));
+                
+                setTimeout(() => {
+                    currentTimelineIndex = pageIndex;
+                    renderTimelineItems();
+                    renderTimelineIndicator();
+                    updateTimelineProgress();
+                }, 300);
+            }
+
+            function nextTimelinePage() {
+                const totalPages = Math.ceil(timelineData.length / itemsPerPage);
+                const nextIndex = (currentTimelineIndex + 1) % totalPages;
+                goToTimelinePage(nextIndex);
+            }
+
+            function prevTimelinePage() {
+                const totalPages = Math.ceil(timelineData.length / itemsPerPage);
+                const prevIndex = currentTimelineIndex === 0 ? totalPages - 1 : currentTimelineIndex - 1;
+                goToTimelinePage(prevIndex);
+            }
+
+            function startAutoRotation() {
+                timelineInterval = setInterval(() => {
+                    nextTimelinePage();
+                }, 8000); // Auto-rotate every 8 seconds
+            }
+
+            function stopAutoRotation() {
+                if (timelineInterval) {
+                    clearInterval(timelineInterval);
+                    timelineInterval = null;
+                }
+            }
+
+            // Chatbot and App Download Functions
+            function showChatbot() {
+                // Note: using a custom modal is better than `alert()`
+                alert('🤖 Hello! I am your J&K Career Advisor chatbot.\n\n' +
+                      '💬 I can help you with:\n' +
+                      '• Career guidance and recommendations\n' +
+                      '• College information and admissions\n' +
+                      '• Exam dates and application deadlines\n' +
+                      '• Stream selection advice\n\n' +
+                      '📱 This feature will be fully available in our mobile app!\n' +
+                      'Download the app to get instant career guidance.');
+            }
+
+            function showAppDownload() {
+                const modal = document.createElement('div');
+                modal.className = 'gov-modal';
+                modal.innerHTML = `
+                    <div class="gov-modal-content p-8 rounded-lg max-w-md w-full mx-4 relative text-center">
+                        <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold" onclick="this.closest('.gov-modal').remove()">×</button>
+                        <div class="text-6xl mb-6">📱</div>
+                        <h2 class="text-2xl font-bold text-blue-800 mb-4">Download Our Mobile App</h2>
+                        <p class="text-gray-600 mb-6">Get the J&K Career & Education Advisor app for:</p>
+                        <ul class="text-left text-gray-700 mb-6 space-y-2">
+                            <li>✅ Offline career guidance</li>
+                            <li>✅ Real-time exam notifications</li>
+                            <li>✅ AI-powered chatbot support</li>
+                            <li>✅ Personalized recommendations</li>
+                            <li>✅ College application tracker</li>
+                        </ul>
+                        <div class="grid grid-cols-1 gap-4">
+                            <button class="gov-btn-primary flex items-center justify-center gap-2" onclick="alert('🤖 App Store coming soon!')">
+                                <span>📱</span>
+                                <div class="text-left">
+                                    <div class="text-xs">Download on the</div>
+                                    <div class="text-sm font-bold">App Store</div>
+                                </div>
+                            </button>
+                            <button class="gov-btn-secondary flex items-center justify-center gap-2" onclick="alert('🤖 Google Play coming soon!')">
+                                <span>🤖</span>
+                                <div class="text-left">
+                                    <div class="text-xs">Get it on</div>
+                                    <div class="text-sm font-bold">Google Play</div>
+                                </div>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4">Available for Android and iOS devices</p>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+
+            // Find Matches Functions
+            function showFindMatches() {
+                const userStream = currentUser?.stream || 'Engineering'; // Default to Engineering for demo
+                const matches = studentMatches[userStream] || [];
+                
+                matchesCount.textContent = `${matches.length} matches found`;
+                matchesContainer.innerHTML = '';
+                
+                matches.forEach(student => {
+                    const studentCard = document.createElement('div');
+                    studentCard.className = 'student-card p-4';
+                    studentCard.innerHTML = `
+                        <div class="flex items-start space-x-4">
+                            <div class="relative">
+                                <div class="student-avatar">${student.initials}</div>
+                                ${student.online ? '<div class="online-indicator"></div>' : ''}
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-gray-800">${student.name}</h4>
+                                    <span class="match-percentage">${student.match}</span>
+                                </div>
+                                <div class="space-y-1 text-sm text-gray-600">
+                                    <p><span class="font-medium">Course:</span> ${student.course}</p>
+                                    <p><span class="font-medium">College:</span> ${student.college}</p>
+                                    <p><span class="font-medium">Location:</span> ${student.location}</p>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-xs text-gray-500 mb-1">Common Interests:</div>
+                                    <div class="flex flex-wrap gap-1">
+                                        ${student.interests.map(interest => 
+                                            `<span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">${interest}</span>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="gov-btn-primary text-xs px-3 py-1" onclick="alert('👋 Connect feature coming soon!')">
+                                        Connect
+                                    </button>
+                                    <button class="gov-btn-secondary text-xs px-3 py-1" onclick="alert('💬 Message feature coming soon!')">
+                                        Message
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    matchesContainer.appendChild(studentCard);
+                });
+                
+                matchesModal.classList.remove('hidden');
+            }
+
+            // Utility Functions
+            function showPage(pageId) {
+                const sections = document.querySelectorAll('#main-content > section');
+                sections.forEach(section => section.classList.add('hidden'));
+                document.getElementById(pageId).classList.remove('hidden');
+            }
+
+            function getStreamDescription(stream) {
+                const descriptions = {
+                    'Science': 'Your analytical thinking and curiosity about natural phenomena make Science an excellent choice. You have the potential to contribute to research and scientific advancement.',
+                    'Arts': 'Your creativity, communication skills, and interest in human behavior suggest that Arts will provide a fulfilling academic journey with diverse career opportunities.',
+                    'Commerce': 'Your numerical aptitude and interest in business operations make Commerce ideal for building a successful career in the financial and business sectors.',
+                    'Engineering': 'Your logical problem-solving abilities and interest in technology make Engineering perfect for you. You can innovate and build solutions for real-world challenges.'
+                };
+                return descriptions[stream] || 'Based on your assessment, we recommend exploring multiple streams to find the best fit for your interests and abilities.';
+            }
+
+            function getCareerData(stream) {
+                const careerMappings = {
+                    'Science': { labels: ['Research Scientist', 'Medical Professional', 'Data Analyst', 'Lab Technician'], scores: [90, 85, 80, 75] },
+                    'Arts': { labels: ['Civil Servant', 'Journalist', 'Lawyer', 'Educator'], scores: [95, 85, 80, 75] },
+                    'Commerce': { labels: ['Chartered Accountant', 'Financial Analyst', 'Business Manager', 'Entrepreneur'], scores: [95, 90, 85, 80] },
+                    'Engineering': { labels: ['Software Engineer', 'Data Scientist', 'Product Manager', 'Research Engineer'], scores: [98, 95, 90, 85] }
+                };
+                return careerMappings[stream] || { labels: [], scores: [] };
+            }
+            
+            // UI Rendering Functions
+            function showMainContent() {
+                authSection.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                navLinks.classList.remove('hidden');
+                initializeTimeline();
+            }
+
+            function updateHomePage() {
+                if (currentUser && currentUser.stream) {
+                    homeStream.textContent = currentUser.stream;
+                    const recommendedCollege = collegeData.find(c => c.stream === currentUser.stream && c.location === currentUser.location) || collegeData.find(c => c.stream === currentUser.stream);
+                    const recommendedCourse = recommendedCollege ? recommendedCollege.courses[0] : 'N/A';
+                    const recommendedCollegeName = recommendedCollege ? recommendedCollege.name : 'N/A';
+                    homeCourse.textContent = recommendedCourse;
+                    homeCollege.textContent = recommendedCollegeName;
+                }
+            }
+
+            function renderRecommendedColleges(stream, location) {
+                recommendedCollegesList.innerHTML = '';
+                const filteredColleges = collegeData.filter(college => college.stream === stream || college.location === location);
+
+                if (filteredColleges.length > 0) {
+                    filteredColleges.forEach(college => {
+                        const collegeCard = document.createElement('div');
+                        collegeCard.className = "official-card p-6";
+                        collegeCard.innerHTML = `
+                            <img src="${college.image}" alt="${college.name}" class="college-image mb-4">
+                            <h3 class="text-xl font-bold text-blue-800 mb-2">${college.name}</h3>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <p><span class="font-semibold text-blue-600">Stream:</span> ${college.stream}</p>
+                                <p><span class="font-semibold text-blue-600">Courses:</span> ${college.courses.slice(0, 2).join(', ')}${college.courses.length > 2 ? '...' : ''}</p>
+                                <p><span class="font-semibold text-blue-600">Location:</span> ${college.location}</p>
+                                <p><span class="font-semibold text-blue-600">Admission Rate:</span> <span class="px-2 py-1 bg-green-100 text-green-800 rounded">${college.admissionRate}</span></p>
+                            </div>
+                        `;
+                        recommendedCollegesList.appendChild(collegeCard);
+                    });
+                } else {
+                    recommendedCollegesList.innerHTML = `<p class="text-gray-500 text-center md:col-span-2 py-8">No colleges found matching your profile. Try exploring other streams or locations.</p>`;
+                }
+            }
+            
+            function renderStudyMaterials(stream) {
+                studyMaterialsList.innerHTML = '';
+                const materials = studyMaterials[stream] || [];
+                if (materials.length > 0) {
+                    materials.forEach(material => {
+                        const li = document.createElement('li');
+                        li.className = 'flex items-center space-x-3 p-3 bg-blue-50 rounded-lg text-gray-700 hover:bg-blue-100 transition';
+                        li.innerHTML = `
+                            <span class="text-blue-600">📘</span>
+                            <span>${material}</span>
+                        `;
+                        studyMaterialsList.appendChild(li);
+                    });
+                } else {
+                    studyMaterialsList.innerHTML = `<p class="text-gray-500 text-center py-4">No study materials available for this stream.</p>`;
+                }
+            }
+
+            function filterColleges() {
+                const selectedStream = streamFilter.value;
+                const selectedCourse = courseFilter.value;
+                collegeList.innerHTML = '';
+                
+                const filteredColleges = collegeData.filter(college => {
+                    const matchesStream = selectedStream === 'All' || college.stream === selectedStream;
+                    const matchesCourse = selectedCourse === 'All' || college.courses.includes(selectedCourse);
+                    return matchesStream && matchesCourse;
+                });
+
+                if (filteredColleges.length > 0) {
+                    noResults.classList.add('hidden');
+                    filteredColleges.forEach(college => {
+                        const collegeCard = document.createElement('div');
+                        collegeCard.className = "official-card p-6 hover:shadow-lg transition-all";
+                        collegeCard.innerHTML = `
+                            <img src="${college.image}" alt="${college.name}" class="college-image mb-4">
+                            <h3 class="text-xl font-bold text-blue-800 mb-3">${college.name}</h3>
+                            <p class="text-gray-700 mb-4 text-sm leading-relaxed">${college.description}</p>
+                            <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                                <div class="bg-blue-50 p-2 rounded">
+                                    <div class="font-semibold text-blue-800">Stream</div>
+                                    <div class="text-gray-700">${college.stream}</div>
+                                </div>
+                                <div class="bg-green-50 p-2 rounded">
+                                    <div class="font-semibold text-green-800">Admission Rate</div>
+                                    <div class="text-gray-700">${college.admissionRate}</div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="font-semibold text-gray-800 mb-2">Available Courses:</div>
+                                <div class="flex flex-wrap gap-1">
+                                    ${college.courses.map(course => `<span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">${course}</span>`).join('')}
+                                </div>
+                            </div>
+                            <button class="gov-btn-secondary w-full view-growth-btn" data-college-name="${college.name}">
+                                📊 View Growth Statistics
+                            </button>
+                        `;
+                        collegeList.appendChild(collegeCard);
+                    });
+
+                    document.querySelectorAll('.view-growth-btn').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const collegeName = e.target.dataset.collegeName;
+                            const college = collegeData.find(c => c.name === collegeName);
+                            if (college) {
+                                showCollegeModal(college);
+                            }
+                        });
+                    });
+                } else {
+                    noResults.classList.remove('hidden');
+                }
+            }
+            
+            function showCollegeModal(college) {
+                modalTitle.textContent = college.name;
+                modalDescription.textContent = college.description;
+                modalStream.textContent = college.stream;
+                modalCourses.textContent = college.courses.join(', ');
+                modalLocation.textContent = college.location;
+                modalAdmissionRate.textContent = college.admissionRate;
+
+                if (collegeGrowthChartInstance) {
+                    collegeGrowthChartInstance.destroy();
+                }
+
+                collegeGrowthChartInstance = new Chart(collegeGrowthChartCanvas.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: college.growthData.labels,
+                        datasets: [{
+                            label: 'Student Enrollment',
+                            data: college.growthData.enrollment,
+                            borderColor: '#0066cc',
+                            backgroundColor: 'rgba(0, 102, 204, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#0066cc',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 51, 102, 0.9)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#ff6600',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 102, 204, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#666666'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(0, 102, 204, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#666666'
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                collegeModal.classList.remove('hidden');
+            }
+
+            // Core Application Logic - FIXED
+            function handleAuth(event) {
+                event.preventDefault();
+                
+                // FIXED: Proper form field access
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const location = document.getElementById('location')?.value?.trim();
+                const academicInterests = document.getElementById('academic-interests')?.value;
+                
+                errorMessage.classList.add('hidden');
+
+                if (!username || !password) {
+                    errorMessage.textContent = 'Please fill in all required fields.';
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                if (authMode === 'login') {
+                    if (users[username] && users[username].password === password) {
+                        currentUser = users[username];
+                        showMainContent();
+                        showPage('home');
+                        updateHomePage();
+                        renderQuestion();
+                    } else {
+                        errorMessage.textContent = 'Invalid username or password. Please try again.';
+                        errorMessage.classList.remove('hidden');
+                    }
+                } else {
+                    if (users[username]) {
+                        errorMessage.textContent = 'Username already exists. Please choose a different username.';
+                        errorMessage.classList.remove('hidden');
+                    } else {
+                        if (!academicInterests || academicInterests === '') {
+                             errorMessage.textContent = 'Please select your academic interests.';
+                             errorMessage.classList.remove('hidden');
+                             return;
+                        }
+
+                        currentUser = {
+                            password: password,
+                            location: location || 'Jammu',
+                            academicInterests: academicInterests,
+                            stream: null
+                        };
+                        users[username] = currentUser;
+                        localStorage.setItem('users', JSON.stringify(users));
+                        showMainContent();
+                        showPage('home');
+                        updateHomePage();
+                        renderQuestion();
+                    }
+                }
+            }
+
+            function toggleAuthMode() {
+                if (authMode === 'login') {
+                    authMode = 'register';
+                    authTitle.textContent = 'Create Account';
+                    authButton.textContent = 'Create Account';
+                    toggleAuthModeButton.textContent = 'Already have an account? Login';
+                    registerFields.classList.remove('hidden');
+                } else {
+                    authMode = 'login';
+                    authTitle.textContent = 'Login';
+                    authButton.textContent = 'Login';
+                    toggleAuthModeButton.textContent = 'Create a new account';
+                    registerFields.classList.add('hidden');
+                }
+            }
+
+            function renderQuestion() {
+                if (currentQuestion < questions.length) {
+                    const q = questions[currentQuestion];
+                    const progress = ((currentQuestion + 1) / questions.length) * 100;
+                    
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+                    
+                    questionText.textContent = q.q;
+                    optionsContainer.innerHTML = '';
+                    
+                    q.options.forEach(option => {
+                        const optionButton = document.createElement('button');
+                        optionButton.textContent = option.text;
+                        optionButton.className = "w-full py-4 px-6 border-2 border-gray-200 rounded-lg text-left hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500";
+                        optionButton.addEventListener('click', () => {
+                            if (selectedOption) {
+                                selectedOption.classList.remove('border-blue-500', 'bg-blue-100', 'text-blue-800');
+                                selectedOption.classList.add('border-gray-200');
+                            }
+                            optionButton.classList.remove('border-gray-200');
+                            optionButton.classList.add('border-blue-500', 'bg-blue-100', 'text-blue-800');
+                            selectedOption = optionButton;
+                            
+                            // Update scores
+                            Object.keys(option.values).forEach(key => {
+                                if (key === 'science') scienceScore += option.values[key];
+                                if (key === 'arts') artsScore += option.values[key];
+                                if (key === 'commerce') commerceScore += option.values[key];
+                                if (key === 'engineering') engineeringScore += option.values[key];
+                            });
+                        });
+                        optionsContainer.appendChild(optionButton);
+                    });
+                } else {
+                    showResultsSection();
+                }
+            }
+            
+            function showResultsSection() {
+                quizSection.classList.add('hidden');
+                quizCompleteSection.classList.remove('hidden');
+            }
+
+            function showFinalResults() {
+                document.getElementById('assessment-page').classList.add('hidden');
+                
+                const scores = {
+                    'Science': scienceScore,
+                    'Arts': artsScore,
+                    'Commerce': commerceScore,
+                    'Engineering': engineeringScore
+                };
+                
+                let recommendedStream = 'Arts';
+                let maxScore = 0;
+                for (const stream in scores) {
+                    if (scores[stream] > maxScore) {
+                        maxScore = scores[stream];
+                        recommendedStream = stream;
+                    }
+                }
+                
+                currentUser.stream = recommendedStream;
+                localStorage.setItem('users', JSON.stringify(users));
+
+                updateProfilePage(recommendedStream, currentUser.location);
+                updateHomePage();
+            }
+
+            function updateProfilePage(recommendedStream, location) {
+                streamResultDiv.innerHTML = `
+                    <div class="text-center p-6">
+                        <div class="w-20 h-20 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-3xl">${recommendedStream === 'Science' ? '🔬' : recommendedStream === 'Arts' ? '📚' : recommendedStream === 'Commerce' ? '💼' : '⚙️'}</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-blue-800 mb-4">${recommendedStream}</h3>
+                        <p class="text-gray-600 leading-relaxed">${getStreamDescription(recommendedStream)}</p>
+                    </div>
+                `;
+
+                const careerData = getCareerData(recommendedStream);
+                const careerCtx = document.getElementById('careerChart').getContext('2d');
+                if (careerChartInstance) {
+                    careerChartInstance.destroy();
+                }
+                careerChartInstance = new Chart(careerCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: careerData.labels,
+                        datasets: [{
+                            data: careerData.scores,
+                            backgroundColor: ['#0066cc', '#ff6600', '#006633', '#ffaa00'],
+                            borderWidth: 0,
+                            hoverBorderWidth: 2,
+                            hoverBorderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 51, 102, 0.9)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#ff6600',
+                                borderWidth: 1,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '% match';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                renderRecommendedColleges(recommendedStream, location);
+                renderStudyMaterials(recommendedStream);
+            }
+
+            function updateStreamsPage(stream) {
+                streamTitle.textContent = streamData[stream].title;
+                streamDescription.textContent = streamData[stream].description;
+                
+                if (careerMappingChartInstance) {
+                    careerMappingChartInstance.destroy();
+                }
+                const careerMappingCtx = document.getElementById('careerMappingChart').getContext('2d');
+                careerMappingChartInstance = new Chart(careerMappingCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: streamData[stream].careerMapping.labels,
+                        datasets: [{
+                            label: 'Career Relevance (%)',
+                            data: streamData[stream].careerMapping.scores,
+                            backgroundColor: ['#0066cc', '#ff6600', '#006633', '#ffaa00'],
+                            borderRadius: 6,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 51, 102, 0.9)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#ff6600',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(0, 102, 204, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#666666',
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#666666'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                if (courseScopeChartInstance) {
+                    courseScopeChartInstance.destroy();
+                }
+                const courseScopeCtx = document.getElementById('courseScopeChart').getContext('2d');
+                courseScopeChartInstance = new Chart(courseScopeCtx, {
+                    type: 'line',
+                    data: {
+                        labels: streamData[stream].courseScope.labels,
+                        datasets: streamData[stream].courseScope.data.map((d, index) => ({
+                            label: d.name,
+                            data: d.values,
+                            borderColor: index === 0 ? '#0066cc' : '#ff6600',
+                            backgroundColor: index === 0 ? 'rgba(0, 102, 204, 0.1)' : 'rgba(255, 102, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: index === 0 ? '#0066cc' : '#ff6600',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }))
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 51, 102, 0.9)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#ff6600',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 102, 204, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#666666'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(0, 102, 204, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#666666'
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                courseDetails.innerHTML = streamData[stream].courseDetails.map(item => `
+                    <div class="p-4 bg-gradient-to-r from-blue-50 to-orange-50 rounded-lg hover:shadow-md transition">
+                        <p class="text-gray-700 leading-relaxed">${item}</p>
+                    </div>
+                `).join('');
+            }
+
+            function populateCourseFilter() {
+                courseFilter.innerHTML = `<option value="All">All Courses</option>` + allCourses.map(c => `<option value="${c}">${c}</option>`).join('');
+            }
+
+            // Event Listeners
+            authForm.addEventListener('submit', handleAuth);
+            toggleAuthModeButton.addEventListener('click', toggleAuthMode);
+            
+            nextButton.addEventListener('click', () => {
+                if (selectedOption) {
+                    currentQuestion++;
+                    selectedOption = null;
+                    renderQuestion();
+                }
+            });
+
+            resultsButton.addEventListener('click', () => {
+                showFinalResults();
+                showPage('profile');
+            });
+
+            streamsCard.addEventListener('click', () => {
+                showPage('streams-careers-page');
+                updateStreamsPage('Science');
+            });
+            
+            collegesCard.addEventListener('click', () => {
+                showPage('colleges');
+                filterColleges();
+            });
+            
+            assessmentCard.addEventListener('click', () => showPage('assessment-page'));
+            
+            findMatchesCard.addEventListener('click', () => showFindMatches());
+
+            // Corrected event listener for mentorship card
+            mentorshipCard.addEventListener('click', () => {
+                showPage('mentorship-page');
+                populateMentorshipData();
+            });
+            
+            // Event listeners for navigation links
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    showPage(targetId);
+                    if (targetId === 'home') {
+                        updateHomePage();
+                        if (!timelineInterval) initializeTimeline();
+                    } else {
+                        stopAutoRotation();
+                        if (targetId === 'profile' && currentUser && currentUser.stream) {
+                            updateProfilePage(currentUser.stream, currentUser.location);
+                        } else if (targetId === 'colleges') {
+                            filterColleges();
+                        } else if (targetId === 'mentorship-page') {
+                            populateMentorshipData();
+                        }
+                    }
+                });
+            });
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    updateStreamsPage(button.dataset.stream);
+                });
+            });
+
+            streamFilter.addEventListener('change', () => {
+                const selectedStream = streamFilter.value;
+                const filteredCourses = Array.from(coursesByStream[selectedStream] || new Set()).sort();
+                courseFilter.innerHTML = `<option value="All">All Courses</option>` + filteredCourses.map(c => `<option value="${c}">${c}</option>`).join('');
+                filterColleges();
+            });
+
+            courseFilter.addEventListener('change', filterColleges);
+
+            closeModalButton.addEventListener('click', () => {
+                collegeModal.classList.add('hidden');
+                if (collegeGrowthChartInstance) {
+                    collegeGrowthChartInstance.destroy();
+                }
+            });
+            
+            collegeModal.addEventListener('click', (e) => {
+                if (e.target === collegeModal) {
+                    collegeModal.classList.add('hidden');
+                    if (collegeGrowthChartInstance) {
+                        collegeGrowthChartInstance.destroy();
+                    }
+                }
+            });
+
+            // Find Matches Modal Event Listeners
+            closeMatchesModalButton.addEventListener('click', () => {
+                matchesModal.classList.add('hidden');
+            });
+            
+            matchesModal.addEventListener('click', (e) => {
+                if (e.target === matchesModal) {
+                    matchesModal.classList.add('hidden');
+                }
+            });
+
+            // Contact Modal Event Listeners
+            if (contactModal) {
+                contactModal.addEventListener('click', (e) => {
+                    if (e.target === contactModal) {
+                        contactModal.classList.add('hidden');
+                    }
+                });
+            }
+            if (closeContactModal) {
+                closeContactModal.addEventListener('click', () => {
+                    contactModal.classList.add('hidden');
+                });
+            }
+            if (confirmContact) {
+                confirmContact.addEventListener('click', () => {
+                    alert('Contact request sent!');
+                    contactModal.classList.add('hidden');
+                });
+            }
+
+            // Timeline Event Listeners
+            timelinePrev.addEventListener('click', () => {
+                stopAutoRotation();
+                prevTimelinePage();
+                setTimeout(startAutoRotation, 3000);
+            });
+
+            timelineNext.addEventListener('click', () => {
+                stopAutoRotation();
+                nextTimelinePage();
+                setTimeout(startAutoRotation, 3000);
+            });
+
+            // Pause auto-rotation when user hovers over timeline
+            timelineContainer.addEventListener('mouseenter', stopAutoRotation);
+            timelineContainer.addEventListener('mouseleave', startAutoRotation);
+
+            // NEW: Chatbot and App Download Event Listeners
+            chatbotButton.addEventListener('click', showChatbot);
+            appDownloadBtn.addEventListener('click', showAppDownload);
+
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+            });
+
+            // Initialization
+            populateCourseFilter();
+            filterColleges();
+            populateMentorshipData();
+            
+            // Initialize first question
+            renderQuestion();
+
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                stopAutoRotation();
+            });
+        });
+    </script>
+</body>
+</html>
